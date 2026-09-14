@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>😂 Surprise!</title>
+
+<style>
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img, video {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+#again {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    padding: 14px 22px;
+    
+    border: none;
+    border-radius: 30px;
+    
+    background: white;
+    color: black;
+    
+    font-size: 17px;
+    font-weight: bold;
+    
+    cursor: pointer;
+    
+    box-shadow: 0 3px 15px rgba(0,0,0,.4);
+}
+
+#again:active {
+    transform: translateX(-50%) scale(0.95);
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="container"></div>
+
+<button id="again" onclick="showNextMedia()">
+    😂 Nog eentje!
+</button>
+
+
+<script>
+
+/* =========================================
+   ALLE FOTO'S EN VIDEO'S
+   ========================================= */
+
+const media = [
+
+    "1.jpg",
+    "2.jpg",
+    "3.jpg",
+    "4.JPG",
+    "5.jpg",
+    "6.jpg",
+    "7.jpg",
+    "8.jpg",
+    "9.JPG",
+    "10.jpg",
+    "11.JPG",
+    "12.jpg",
+    "13.jpg",
+    "14.jpg",
+    "15.jpg",
+    "16.jpg",
+    "17.JPEG",
+    "18.JPG",
+    "19.JPEG",
+    "20.JPEG",
+    "21.JPEG",
+    "22.JPEG",
+    "23.JPEG",
+    "24.JPEG",
+    "25.JPEG",
+    "26.JPEG",
+    "27.JPEG",
+    "28.JPEG",
+    "29.JPEG",
+    "30.JPEG",
+    "31.JPEG",
+    "32.JPEG",
+    "33.JPEG",
+    "34.JPEG",
+    "35.JPEG",
+    "36.JPEG",
+    "37.JPEG",
+    "38.JPEG",
+    "39.JPEG",
+    "40.JPEG",
+    "41.JPG",
+    "42.JPEG",
+    "43.JPEG",
+    "44.JPEG",
+    "45.JPEG",
+    "46.JPG",
+    "47.JPEG",
+    "48.JPEG",
+    "49.JPEG",
+
+    "Video1.MP4",
+    "Video2.MP4",
+    "Video3.MP4",
+    "Video4.MP4",
+    "Video5.MP4",
+    "Video6.mp4"
+
+];
+
+
+/* =========================================
+   WILLEKEURIGE VOLGORDE
+   ========================================= */
+
+let shuffledMedia = [];
+let currentIndex = 0;
+
+
+/* Alles willekeurig door elkaar schudden */
+
+function shuffleMedia() {
+
+    shuffledMedia = [...media];
+
+    for (let i = shuffledMedia.length - 1; i > 0; i--) {
+
+        const j = Math.floor(Math.random() * (i + 1));
+
+        [shuffledMedia[i], shuffledMedia[j]] =
+        [shuffledMedia[j], shuffledMedia[i]];
+
+    }
+
+    currentIndex = 0;
+
+}
+
+
+/* =========================================
+   VOLGENDE FOTO OF VIDEO TONEN
+   ========================================= */
+
+function showNextMedia() {
+
+    /* Zijn alle foto's/video's geweest?
+       Dan maken we een volledig nieuwe
+       willekeurige volgorde. */
+
+    if (currentIndex >= shuffledMedia.length) {
+
+        shuffleMedia();
+
+    }
+
+
+    const file = shuffledMedia[currentIndex];
+
+    currentIndex++;
+
+
+    const path = "media/" + file;
+
+    const container =
+        document.getElementById("container");
+
+
+    /* Vorige foto/video verwijderen */
+
+    container.innerHTML = "";
+
+
+    /* Bestandstype controleren */
+
+    const extension =
+        file.split(".").pop().toLowerCase();
+
+
+    /* VIDEO */
+
+    if (extension === "mp4") {
+
+        const video =
+            document.createElement("video");
+
+        video.src = path;
+
+        video.controls = true;
+
+        video.autoplay = true;
+
+        video.playsInline = true;
+
+        container.appendChild(video);
+
+    }
+
+
+    /* FOTO */
+
+    else {
+
+        const img =
+            document.createElement("img");
+
+        img.src = path;
+
+        container.appendChild(img);
+
+    }
+
+}
+
+
+/* =========================================
+   START
+   ========================================= */
+
+
+/* Eerst alles willekeurig schudden */
+
+shuffleMedia();
+
+
+/* Meteen eerste foto/video tonen */
+
+showNextMedia();
+
+
+</script>
+
+</body>
+</html>
