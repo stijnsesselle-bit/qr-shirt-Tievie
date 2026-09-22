@@ -1,82 +1,137 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>😂 Surprise!</title>
+
 
 <style>
 
 html, body {
+
     margin: 0;
     padding: 0;
+
     width: 100%;
     height: 100%;
+
     background: #000;
+
     overflow: hidden;
+
     font-family: Arial, sans-serif;
+
 }
+
+
+/* FOTO / VIDEO CONTAINER */
 
 #container {
+
     width: 100%;
     height: 100%;
+
     display: flex;
+
     justify-content: center;
     align-items: center;
+
 }
+
+
+/* FOTO'S EN VIDEO'S */
 
 img, video {
+
     max-width: 100%;
     max-height: 100%;
+
     width: auto;
     height: auto;
+
     object-fit: contain;
+
 }
+
+
+/* KNOP */
 
 #again {
+
     position: fixed;
+
     bottom: 25px;
+
     left: 50%;
+
     transform: translateX(-50%);
-    
+
     padding: 14px 22px;
-    
+
     border: none;
+
     border-radius: 30px;
-    
+
     background: white;
+
     color: black;
-    
+
     font-size: 17px;
+
     font-weight: bold;
-    
+
     cursor: pointer;
-    
-    box-shadow: 0 3px 15px rgba(0,0,0,.4);
+
+    box-shadow:
+    0 3px 15px rgba(0,0,0,.4);
+
 }
 
+
 #again:active {
-    transform: translateX(-50%) scale(0.95);
+
+    transform:
+    translateX(-50%) scale(0.95);
+
 }
 
 </style>
+
 </head>
+
+
 
 <body>
 
+
 <div id="container"></div>
 
-<button id="again" onclick="showNextMedia()">
-    😂 Nog eentje!
+
+<button
+id="again"
+onclick="showNextMedia()">
+
+😂 Nog eentje!
+
 </button>
+
 
 
 <script>
 
+
 /* =========================================
+
    ALLE FOTO'S EN VIDEO'S
+
    ========================================= */
+
 
 const media = [
 
@@ -96,6 +151,7 @@ const media = [
     "14.jpg",
     "15.jpg",
     "16.jpg",
+
     "17.JPEG",
     "18.JPG",
     "19.JPEG",
@@ -120,6 +176,7 @@ const media = [
     "38.JPEG",
     "39.JPEG",
     "40.JPEG",
+
     "41.JPG",
     "42.JPEG",
     "43.JPEG",
@@ -129,6 +186,13 @@ const media = [
     "47.JPEG",
     "48.JPEG",
     "49.JPEG",
+
+    "50.JPEG",
+    "51.JPEG",
+    "52.JPEG",
+    "53.JPEG",
+    "54.JPEG",
+    "55.JPEG",
 
     "Video1.MP4",
     "Video2.MP4",
@@ -140,125 +204,244 @@ const media = [
 ];
 
 
+
 /* =========================================
+
    WILLEKEURIGE VOLGORDE
+
    ========================================= */
 
+
 let shuffledMedia = [];
+
 let currentIndex = 0;
 
 
-/* Alles willekeurig door elkaar schudden */
+
+/*
+
+   Alle foto's EN video's worden samen
+   willekeurig door elkaar geschud.
+
+*/
 
 function shuffleMedia() {
 
+
     shuffledMedia = [...media];
 
-    for (let i = shuffledMedia.length - 1; i > 0; i--) {
 
-        const j = Math.floor(Math.random() * (i + 1));
+    for (
 
-        [shuffledMedia[i], shuffledMedia[j]] =
-        [shuffledMedia[j], shuffledMedia[i]];
+        let i =
+        shuffledMedia.length - 1;
+
+        i > 0;
+
+        i--
+
+    ) {
+
+
+        const j =
+        Math.floor(
+            Math.random() * (i + 1)
+        );
+
+
+        [
+
+            shuffledMedia[i],
+            shuffledMedia[j]
+
+        ] = [
+
+            shuffledMedia[j],
+            shuffledMedia[i]
+
+        ];
+
 
     }
 
+
     currentIndex = 0;
+
 
 }
 
 
+
 /* =========================================
-   VOLGENDE FOTO OF VIDEO TONEN
+
+   VOLGENDE FOTO OF VIDEO
+
    ========================================= */
+
 
 function showNextMedia() {
 
-    /* Zijn alle foto's/video's geweest?
-       Dan maken we een volledig nieuwe
-       willekeurige volgorde. */
 
-    if (currentIndex >= shuffledMedia.length) {
+    /*
+
+       Als ALLE bestanden één keer
+       zijn getoond, maken we een
+       nieuwe willekeurige volgorde.
+
+    */
+
+
+    if (
+
+        currentIndex >=
+        shuffledMedia.length
+
+    ) {
+
 
         shuffleMedia();
+
 
     }
 
 
-    const file = shuffledMedia[currentIndex];
+
+    const file =
+        shuffledMedia[currentIndex];
+
 
     currentIndex++;
 
 
-    const path = "media/" + file;
+
+    const path =
+        "media/" + file;
+
+
 
     const container =
-        document.getElementById("container");
+        document.getElementById(
+            "container"
+        );
+
 
 
     /* Vorige foto/video verwijderen */
 
+
     container.innerHTML = "";
 
 
-    /* Bestandstype controleren */
+
+    /* Bestandstype bepalen */
+
 
     const extension =
-        file.split(".").pop().toLowerCase();
+
+        file
+        .split(".")
+        .pop()
+        .toLowerCase();
 
 
-    /* VIDEO */
+
+    /* =====================================
+       VIDEO
+       ===================================== */
+
 
     if (extension === "mp4") {
 
+
         const video =
-            document.createElement("video");
+            document.createElement(
+                "video"
+            );
+
 
         video.src = path;
 
+
         video.controls = true;
+
 
         video.autoplay = true;
 
+
         video.playsInline = true;
 
-        container.appendChild(video);
+
+        container.appendChild(
+            video
+        );
+
 
     }
 
 
-    /* FOTO */
+
+    /* =====================================
+       FOTO
+       ===================================== */
+
 
     else {
 
+
         const img =
-            document.createElement("img");
+            document.createElement(
+                "img"
+            );
+
 
         img.src = path;
 
-        container.appendChild(img);
+
+        container.appendChild(
+            img
+        );
+
 
     }
+
 
 }
 
 
+
 /* =========================================
-   START
+
+   WEBSITE STARTEN
+
    ========================================= */
 
 
-/* Eerst alles willekeurig schudden */
+/*
+
+   Eerst alle 61 bestanden
+   willekeurig door elkaar schudden.
+
+*/
+
 
 shuffleMedia();
 
 
-/* Meteen eerste foto/video tonen */
+
+/*
+
+   Daarna meteen de eerste
+   willekeurige foto/video tonen.
+
+*/
+
 
 showNextMedia();
 
 
 </script>
 
+
 </body>
+
 </html>
